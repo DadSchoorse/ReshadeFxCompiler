@@ -8,6 +8,8 @@ BUILD_DIR := ../build
 SRC_FILES := $(wildcard *.cpp)
 OBJ_FILES := $(foreach file,$(patsubst %.cpp,%.o,$(SRC_FILES)),$(BUILD_DIR)/$(file))
 RESHADE_SRC := $(wildcard ../reshade/source/effect*.cpp)
+RESHADE_SRC := $(filter-out ../reshade/source/effect_codegen_hlsl.cpp,$(RESHADE_SRC))
+RESHADE_SRC := $(filter-out ../reshade/source/effect_codegen_glsl.cpp,$(RESHADE_SRC))
 RESHADE_OBJ := $(foreach file,$(patsubst %.cpp,%.o,$(notdir $(RESHADE_SRC))),$(BUILD_DIR)/reshade/$(file))
 
 all: $(BUILD_DIR)/ReshadeFxCompiler
