@@ -12,9 +12,12 @@ RESHADE_OBJ := $(foreach file,$(patsubst %.cpp,%.o,$(notdir $(RESHADE_SRC))),$(B
 
 all: $(BUILD_DIR)/ReshadeFxCompiler
 
-$(BUILD_DIR)/ReshadeFxCompiler: $(OBJ_FILES64) $(RESHADE_OBJ)
+$(BUILD_DIR)/ReshadeFxCompiler: $(OBJ_FILES) $(RESHADE_OBJ)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
+
+$(BUILD_DIR)/%.o: %.cpp $(BUILD_DIR)
+	$(CXX) $< -o $@ -c  $(CXXFLAGS)
 
 $(BUILD_DIR)/reshade/%.o: ../reshade/source/%.cpp $(BUILD_DIR)
 	$(CXX) $< -o $@ -c  $(CXXFLAGS)
