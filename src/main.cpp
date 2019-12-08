@@ -42,22 +42,22 @@ int main(int argc, char *argv[])
        }
     }
     preprocessor.add_macro_definition("BUFFER_WIDTH", std::to_string(width));
-	preprocessor.add_macro_definition("BUFFER_HEIGHT", std::to_string(height));
-	preprocessor.add_macro_definition("BUFFER_RCP_WIDTH", "(1.0 / BUFFER_WIDTH)");
-	preprocessor.add_macro_definition("BUFFER_RCP_HEIGHT", "(1.0 / BUFFER_HEIGHT)");
-	preprocessor.add_include_path(includePath);
-	preprocessor.append_file(shaderFile);
-	
-	std::cout << shaderFile << std::endl;
-	std::cout << includePath << std::endl;
-	std::cout << outFile << std::endl;
-	
-	reshadefx::parser parser;
-	
-	std::cout << preprocessor.errors() << std::endl;
-	
-	std::unique_ptr<reshadefx::codegen> codegen(
-	    reshadefx::create_codegen_spirv(true /* vulkan semantics */, false /* debug info */, true /* uniforms to spec constants */));
+    preprocessor.add_macro_definition("BUFFER_HEIGHT", std::to_string(height));
+    preprocessor.add_macro_definition("BUFFER_RCP_WIDTH", "(1.0 / BUFFER_WIDTH)");
+    preprocessor.add_macro_definition("BUFFER_RCP_HEIGHT", "(1.0 / BUFFER_HEIGHT)");
+    preprocessor.add_include_path(includePath);
+    preprocessor.append_file(shaderFile);
+
+    std::cout << shaderFile << std::endl;
+    std::cout << includePath << std::endl;
+    std::cout << outFile << std::endl;
+
+    reshadefx::parser parser;
+
+    std::cout << preprocessor.errors() << std::endl;
+
+    std::unique_ptr<reshadefx::codegen> codegen(
+        reshadefx::create_codegen_spirv(true /* vulkan semantics */, false /* debug info */, true /* uniforms to spec constants */));
     if (!parser.parse(std::move(preprocessor.output()), codegen.get()))
     {
         return 1;
