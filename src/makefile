@@ -1,5 +1,5 @@
 CXX ?= g++
-CXXFLAGS ?= -O3 -Wall -Wextra -fpermissive -Wno-switch -Wno-missing-field-initializers
+CXXFLAGS ?= -O3 -fpermissive -Wall -Wextra -Wno-switch -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-char-subscripts
 CXXFLAGS += -std=c++2a
 LDFLAGS +=  -lstdc++fs
 
