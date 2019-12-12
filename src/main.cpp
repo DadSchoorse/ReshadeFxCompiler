@@ -48,13 +48,13 @@ int main(int argc, char *argv[])
     preprocessor.add_include_path(includePath);
     preprocessor.append_file(shaderFile);
 
-    std::cout << shaderFile << std::endl;
-    std::cout << includePath << std::endl;
-    std::cout << outFile << std::endl;
-
     reshadefx::parser parser;
 
-    std::cout << preprocessor.errors() << std::endl;
+    std::string errors = preprocessor.errors();
+    if(errors != "")
+    {
+        std::cout << errors << std::endl;
+    }
 
     std::unique_ptr<reshadefx::codegen> codegen(
         reshadefx::create_codegen_spirv(true /* vulkan semantics */, false /* debug info */, true /* uniforms to spec constants */));
@@ -63,7 +63,11 @@ int main(int argc, char *argv[])
         return 1;
     }
     
-    std::cout << parser.errors() << std::endl;
+    errors = parser.errors();
+    if(errors != "")
+    {
+        std::cout << errors << std::endl;
+    }
     
     reshadefx::module module;
     
