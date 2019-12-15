@@ -73,10 +73,7 @@ int main(int argc, char *argv[])
     
     codegen->write_result(module);
     
-    for(size_t i = 0; i < module.entry_points.size(); i++)
-    {
-        std::ofstream(outFile + std::to_string(i), std::ios::binary).write(reinterpret_cast<const char *>(module.spirv_modules[module.entry_points[i].name].data()), module.spirv_modules[module.entry_points[i].name].size() * sizeof(uint32_t));
-    }
+    std::ofstream(outFile, std::ios::binary).write(reinterpret_cast<const char *>(module.spirv.data()), module.spirv.size() * sizeof(uint32_t));
 	
     return 0;
 }
