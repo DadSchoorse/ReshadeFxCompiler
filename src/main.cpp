@@ -2,6 +2,8 @@
 #include "../reshade/source/effect_codegen.hpp"
 #include "../reshade/source/effect_preprocessor.hpp"
 #include <climits>
+#include <cstdlib>
+#include <cassert>
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -12,6 +14,7 @@
 */
 int main(int argc, char *argv[])
 {
+    std::string tempFile = "/tmp/vkBasalt.spv";
     reshadefx::preprocessor preprocessor;
     preprocessor.add_macro_definition("__RESHADE__", std::to_string(INT_MAX));
     preprocessor.add_macro_definition("__RESHADE_PERFORMANCE_MODE__", "1");
@@ -73,7 +76,15 @@ int main(int argc, char *argv[])
     
     codegen->write_result(module);
     
-    std::ofstream(outFile, std::ios::binary).write(reinterpret_cast<const char *>(module.spirv.data()), module.spirv.size() * sizeof(uint32_t));
+    std::ofstream(tempFile, std::ios::binary).write(reinterpret_cast<const char *>(module.spirv.data()), module.spirv.size() * sizeof(uint32_t));
+    
+    for(size_t i = 0; i < module.entry_points.size(); i++)
+    {
+        std::string stage = module.entry_points[i].is_pixel_shader ? "frag" : "vert";
+        std::string command = "spirv-cross " + tempFile + " --vulkan-semantics --entry " + module.entry_points[i].name;
+        command += " | glslangValidator -V --stdin -S " + stage + " -o " + outFile +std::to_string(i);
+        assert(!std::system(command.c_str()));
+    }
 	
     return 0;
 }
