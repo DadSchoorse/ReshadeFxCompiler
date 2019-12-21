@@ -1,6 +1,6 @@
 CXX ?= g++
 CXXFLAGS ?= -O3 -Wall -Wextra -Wno-switch -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-char-subscripts
-CXXFLAGS += -std=c++2a
+CXXFLAGS += -std=c++2a -I/usr/include/spirv/1.0
 LDFLAGS +=  -lstdc++fs
 
 BUILD_DIR := ../build
