@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     }
 
     std::unique_ptr<reshadefx::codegen> codegen(
-        reshadefx::create_codegen_spirv(true /* vulkan semantics */, false /* debug info */, true /* uniforms to spec constants */, true /*flip vertex shader*/));
+        reshadefx::create_codegen_spirv(true /* vulkan semantics */, true /* debug info */, true /* uniforms to spec constants */, true /*flip vertex shader*/));
     if (!parser.parse(std::move(preprocessor.output()), codegen.get()))
     {
         return 1;
