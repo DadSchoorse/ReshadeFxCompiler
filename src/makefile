@@ -1,5 +1,5 @@
 CXX ?= g++
-CXXFLAGS ?= -O3 -Wall -Wextra -Wno-switch -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-char-subscripts
+CXXFLAGS ?= -O3 -Wall -Wextra -Wno-unknown-pragmas
 CXXFLAGS += -std=c++2a -I../reshade/deps/spirv/include/spirv/unified1
 LDFLAGS +=  -lstdc++fs
 
